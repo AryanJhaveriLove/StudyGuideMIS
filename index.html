@@ -370,47 +370,47 @@
     const feedbackMap = {
       1: {
         correct: 'B',
-        correctText: "Correct. This scenario is about price elasticity tied to falling computing costs. As computing becomes cheaper, startups can offer features that used to be too expensive, and demand expands because the product becomes affordable to more users.",
-        wrong: {
-          A: "Incorrect. Switching costs describe how hard it is for users to leave after adopting a product. The scenario is mainly about why the app can offer advanced features at all, not why students stay once they adopt it.",
-          C: "Incorrect. Vertical integration means one firm controls multiple stages of production or distribution. Nothing in the scenario suggests the startup now owns more of its supply chain.",
-          D: "Incorrect. Bargaining power of suppliers is about how much leverage suppliers have over firms. The scenario is focused on cheaper computing making new features practical, not suppliers forcing student adoption."
+        rationale: {
+          A: "A is incorrect because switching costs describe how difficult it is for users to leave a product after adopting it. This scenario is mainly about why the startup can now offer advanced AI features at an affordable price, not about what makes students stay later.",
+          B: "B is correct because the chapter emphasizes that when computing becomes cheaper, demand rises and new uses become practical. The startup can now deliver speech-to-text and summaries at a student-friendly price because falling computing costs changed the economics of the product.",
+          C: "C is incorrect because vertical integration means a firm controls multiple stages of production or distribution. Nothing in the scenario suggests the startup now owns more of its supply chain or internalizes outside partners.",
+          D: "D is incorrect because bargaining power of suppliers refers to the leverage suppliers have over a firm. The key issue here is not cloud providers forcing adoption, but rather lower computing costs making advanced features affordable."
         }
       },
       2: {
         correct: 'D',
-        correctText: "Correct. The key idea is that managers often think linearly even though computing improves exponentially. That makes them underestimate how repeated technical improvements can eventually reshape a product or service.",
-        wrong: {
-          A: "Incorrect. The scenario is not about managers believing demand is fixed. It is about them misreading the speed and cumulative effect of technological change.",
-          B: "Incorrect. Hardware clearly matters here, but this answer is too narrow. The deeper issue is that managers misjudge exponential improvement, not that they ignore users.",
-          C: "Incorrect. The scenario does not suggest managers ignored customer preferences. The problem is misunderstanding how fast technical capability can compound over time."
+        rationale: {
+          A: "A is incorrect because the scenario is not about managers assuming demand stays fixed. The main problem is that they fail to understand how repeated technical improvements can compound over time.",
+          B: "B is incorrect because although hardware matters, the question is asking why managers misjudge the size of change. The deeper lesson is about misunderstanding exponential improvement, not simply ignoring users.",
+          C: "C is incorrect because nothing in the scenario suggests managers ignored customer preferences. The issue is their failure to recognize how gradual technical changes can accumulate into major service improvements.",
+          D: "D is correct because the chapter’s core idea is that managers often think linearly even though technology improves exponentially. That blind spot causes them to underestimate how much small improvements can eventually transform a product or market."
         }
       },
       3: {
         correct: 'A',
-        correctText: "Correct. This is digital convergence: one device now performs many functions that once required separate products. The scenario directly highlights how increasing computing power allowed those tools to merge into a single platform.",
-        wrong: {
-          B: "Incorrect. Capital intensity refers to the need for large upfront investment, usually in plants, equipment, or infrastructure. That does not explain why many functions now exist in one phone.",
-          C: "Incorrect. Network effects mean a product becomes more valuable as more people use it. The scenario is about combining functions inside one device, not the value created by more users joining a network.",
-          D: "Incorrect. Switching costs may help people stay with a device ecosystem, but they do not explain why a single device replaced many separate tools."
+        rationale: {
+          A: "A is correct because digital convergence means that many separate technologies and functions combine into one device or platform. The phone replacing a camera, GPS, music player, and planner is a direct example of convergence.",
+          B: "B is incorrect because capital intensity refers to the need for large upfront investments in facilities or equipment. That does not explain why one device now performs many different digital functions.",
+          C: "C is incorrect because network effects occur when a product becomes more valuable as more people use it. The scenario is about combining technologies inside one device, not about value increasing from a growing user base.",
+          D: "D is incorrect because switching costs might help keep users in a phone ecosystem, but they do not explain why one product absorbed the roles of many separate devices."
         }
       },
       4: {
         correct: 'C',
-        correctText: "Correct. The scenario shows that tasks once too costly or slow became practical for a small firm once computing got cheaper and faster. That is exactly how falling computing costs expand access to computationally intensive applications.",
-        wrong: {
-          A: "Incorrect. Customer price sensitivity is not the main issue here. The change happened because the firm could now afford the technology, not because customers changed how they view price.",
-          B: "Incorrect. Barriers to entry concern how hard it is for new firms to enter a market. The scenario is about a company adopting AI tools, not about blocking rivals from entering tutoring.",
-          D: "Incorrect. This choice misses the main lesson of the chapter. Falling computing costs affect many service businesses because they can now use advanced software that was once too expensive."
+        rationale: {
+          A: "A is incorrect because customer price sensitivity is not the main issue in the scenario. The company adopted AI tools because the underlying technology became affordable and practical, not because customers changed how they react to prices.",
+          B: "B is incorrect because barriers to entry concern how hard it is for new firms to enter an industry. The scenario is focused on a current firm gaining access to advanced tools, not on blocking competitors from entering tutoring.",
+          C: "C is correct because the chapter explains that falling computing costs make computationally intensive applications available to more firms. The tutoring company could now use AI because the cost and speed of computing improved enough to make those tasks practical.",
+          D: "D is incorrect because falling computing costs affect far more than hardware manufacturers. Service businesses also benefit when software that used to be too expensive or slow becomes affordable and useful."
         }
       },
       5: {
         correct: 'B',
-        correctText: "Correct. The second intern best matches the chapter. Repeated improvements in price and performance can unlock new use cases, new products, and new business models even when the gains seem small at first.",
-        wrong: {
-          A: "Incorrect. This answer assumes demand stops growing once devices feel fast enough, but the chapter emphasizes that cheaper computing often creates entirely new uses and more demand.",
-          C: "Incorrect. Software matters, but the chapter explains that hardware price and performance trends also shape what software and services become possible.",
-          D: "Incorrect. Managers do need to focus on current operations, but ignoring future capabilities is exactly the kind of blind spot this chapter warns against."
+        rationale: {
+          A: "A is incorrect because the chapter argues that even when devices already seem fast, continued gains in price and performance can still create new applications and higher demand. Demand does not simply stop once products feel good enough.",
+          B: "B is correct because repeated improvements in computing power and price/performance often open the door to entirely new products, services, and business models. That is one of the main managerial implications of Moore’s Law.",
+          C: "C is incorrect because software design is important, but the chapter specifically emphasizes that hardware improvements shape what software and services become feasible in the first place.",
+          D: "D is incorrect because ignoring future computing capability is exactly the kind of managerial blind spot this chapter warns against. Managers should care about how today’s technical trends create tomorrow’s strategic opportunities."
         }
       }
     };
@@ -435,12 +435,21 @@
             }
           });
 
+          let fullExplanation = '<div><strong>Answer review:</strong></div><ul style="margin-top:10px; padding-left:20px;">';
+
+          ['A','B','C','D'].forEach(letter => {
+            fullExplanation += `<li><strong>${letter}.</strong> ${feedbackMap[qNum].rationale[letter]}</li>`;
+          });
+
+          fullExplanation += '</ul>';
+
           if (selected === correct) {
             feedback.className = 'feedback show correct';
-            feedback.innerHTML = `<strong>Correct.</strong> ${feedbackMap[qNum].correctText}`;
+            feedback.innerHTML = `<strong>Correct.</strong> You chose the right answer.${fullExplanation}`;
           } else {
             feedback.className = 'feedback show incorrect';
-            feedback.innerHTML = `<strong>Incorrect.</strong> ${feedbackMap[qNum].wrong[selected]}`;
+            feedback.innerHTML = `<strong>Incorrect.</strong> You chose ${selected}, but the correct answer is ${correct}.${fullExplanation}`;
+          }`;
           }
         });
       });
