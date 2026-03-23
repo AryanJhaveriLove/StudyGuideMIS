@@ -1,1 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 9 Study Guide</title>
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #bf5700;
+      --accent-dark: #8f3f00;
+      --border: #e5e7eb;
+      --success: #166534;
+      --error: #991b1b;
+    }
 
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 10px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .nav a:hover {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: var(--accent-dark);
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 40px 32px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 2.4rem;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 8px 0;
+      font-size: 1.05rem;
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .card h2, .section-title {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .term {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .term:first-of-type,
+    .question:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .term h3,
+    .question h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .label {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 10px 0 0;
+    }
+
+    .question {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .choice-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .choice-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      border-color: #d1d5db;
+    }
+
+    .choice-btn.correct-choice {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+
+    .choice-btn.incorrect-choice {
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      display: none;
+    }
+
+    .feedback.show { display: block; }
+
+    .feedback.correct {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: var(--success);
+    }
+
+    .feedback.incorrect {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: var(--error);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 28px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <span class="brand">MIS 301 Study Guides</span>
+      <a href="index.html">Home</a>
+      <a href="chapter9.html">Chapter 9</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero">
+      <h1>Chapter 9 Study Guide</h1>
+      <p><strong>Cloud Computing:</strong> Why Buy When You Can Rent?</p>
+      <p>This chapter explains how cloud computing changes how firms access technology by allowing them to rent computing resources instead of owning them.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>What to Know</h2>
+        <p class="muted">Cloud computing allows firms to access computing resources on demand instead of building their own infrastructure.</p>
+      </div>
+      <div class="card">
+        <h2>Main Theme</h2>
+        <p class="muted">The shift from ownership to renting technology lowers costs, increases flexibility, and enables faster innovation.</p>
+      </div>
+      <div class="card">
+        <h2>Manager Takeaway</h2>
+        <p class="muted">Managers must evaluate cost, scalability, and risk when deciding between cloud and traditional IT infrastructure.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Vocabulary</h2>
+
+      <div class="term">
+        <h3>Cloud Computing</h3>
+        <p><span class="label">Definition:</span> Cloud computing is the delivery of computing services over the internet.</p>
+        <p><span class="label">Why it matters:</span> Firms can avoid large upfront investments and instead pay for what they use.</p>
+      </div>
+
+      <div class="term">
+        <h3>Utility Computing</h3>
+        <p><span class="label">Definition:</span> Computing resources are treated like utilities (electricity or water).</p>
+        <p><span class="label">Why it matters:</span> Firms only pay for usage instead of owning infrastructure.</p>
+      </div>
+
+      <div class="term">
+        <h3>SaaS (Software as a Service)</h3>
+        <p><span class="label">Definition:</span> Software delivered via the internet instead of installed locally.</p>
+        <p><span class="label">Example:</span> Google Docs</p>
+      </div>
+
+      <div class="term">
+        <h3>IaaS</h3>
+        <p><span class="label">Definition:</span> Renting servers, storage, and networking resources.</p>
+      </div>
+
+      <div class="term">
+        <h3>PaaS</h3>
+        <p><span class="label">Definition:</span> Platforms for developers to build applications.</p>
+      </div>
+
+      <div class="term">
+        <h3>Scalability</h3>
+        <p><span class="label">Definition:</span> Ability to increase or decrease resources quickly.</p>
+      </div>
+
+      <div class="term">
+        <h3>Elasticity</h3>
+        <p><span class="label">Definition:</span> Automatic scaling based on demand.</p>
+      </div>
+
+      <div class="term">
+        <h3>Downtime</h3>
+        <p><span class="label">Definition:</span> When systems are unavailable.</p>
+      </div>
+
+      <div class="term">
+        <h3>Vendor Lock-In</h3>
+        <p><span class="label">Definition:</span> Difficulty switching providers.</p>
+      </div>
+
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Interactive Quiz</h2>
+
+      <div class="question" data-qid="c9q1" data-correct="A">
+        <h3>1. A company switches from owning servers to paying for computing monthly.</h3>
+        <p><strong>What is this?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Cloud Computing</button>
+          <button class="choice-btn" data-choice="B">B. Vertical Integration</button>
+          <button class="choice-btn" data-choice="C">C. Data Mining</button>
+          <button class="choice-btn" data-choice="D">D. Open Source</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c9q2" data-correct="C">
+        <h3>2. A firm uses Google Docs instead of Microsoft Word installed locally.</h3>
+        <p><strong>What is this?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. IaaS</button>
+          <button class="choice-btn" data-choice="B">B. PaaS</button>
+          <button class="choice-btn" data-choice="C">C. SaaS</button>
+          <button class="choice-btn" data-choice="D">D. ERP</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+    </section>
+
+    <footer>
+      MIS 301 Study Guide • Chapter 9
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('.question').forEach(q => {
+      const correct = q.dataset.correct;
+      const buttons = q.querySelectorAll('.choice-btn');
+      const feedback = q.querySelector('.feedback');
+
+      buttons.forEach(btn => {
+        btn.onclick = () => {
+          buttons.forEach(b => b.disabled = true);
+          if (btn.dataset.choice === correct) {
+            feedback.innerHTML = "Correct!";
+            feedback.classList.add('show','correct');
+          } else {
+            feedback.innerHTML = "Incorrect.";
+            feedback.classList.add('show','incorrect');
+          }
+        };
+      });
+    });
+  </script>
+</body>
+</html>
