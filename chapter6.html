@@ -1,1 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 6</title>
 
+<style>
+body { font-family: Arial; margin: 0; background:#f7f7f8;}
+.header { background:#bf5700; color:white; padding:30px;}
+.container { max-width:900px; margin:auto; padding:20px;}
+.card { background:white; padding:20px; margin-bottom:20px; border-radius:10px;}
+button { padding:10px; margin-top:10px; width:100%; }
+.correct { color:green; }
+.incorrect { color:red; }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Chapter 6</h1>
+<p>Moore’s Law</p>
+<a href="index.html" style="color:white;">← Back Home</a>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h2>Key Concepts</h2>
+<ul>
+<li>Computing power grows exponentially</li>
+<li>Costs decrease over time</li>
+<li>New opportunities emerge</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Quiz</h2>
+
+<p>What does Moore’s Law describe?</p>
+<button onclick="check(this,'A')">A. Slower computing growth</button>
+<button onclick="check(this,'B')">B. Doubling of computing power</button>
+<button onclick="check(this,'C')">C. Internet speed</button>
+
+<p id="result"></p>
+
+</div>
+
+</div>
+
+<script>
+function check(btn, choice){
+  const result = document.getElementById("result");
+
+  if(choice === "B"){
+    result.innerHTML = "Correct — computing power doubles.";
+    result.className = "correct";
+  } else {
+    result.innerHTML = "Incorrect — not Moore’s Law.";
+    result.className = "incorrect";
+  }
+}
+</script>
+
+</body>
+</html>
