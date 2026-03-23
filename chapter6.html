@@ -1,67 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 6</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 1 Study Guide</title>
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #bf5700;
+      --accent-dark: #8f3f00;
+      --border: #e5e7eb;
+      --success: #166534;
+      --error: #991b1b;
+    }
 
-<style>
-body { font-family: Arial; margin: 0; background:#f7f7f8;}
-.header { background:#bf5700; color:white; padding:30px;}
-.container { max-width:900px; margin:auto; padding:20px;}
-.card { background:white; padding:20px; margin-bottom:20px; border-radius:10px;}
-button { padding:10px; margin-top:10px; width:100%; }
-.correct { color:green; }
-.incorrect { color:red; }
-</style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 10px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .nav a:hover {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: var(--accent-dark);
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 40px 32px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 2.4rem;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 8px 0;
+      font-size: 1.05rem;
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .card h2, .section-title {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .term {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .term:first-of-type,
+    .question:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .term h3,
+    .question h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .label {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 10px 0 0;
+    }
+
+    .question {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .choice-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .choice-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      border-color: #d1d5db;
+    }
+
+    .choice-btn.correct-choice {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+
+    .choice-btn.incorrect-choice {
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      display: none;
+    }
+
+    .feedback.show { display: block; }
+
+    .feedback.correct {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: var(--success);
+    }
+
+    .feedback.incorrect {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: var(--error);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 28px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 1.9rem; }
+      .container { padding: 20px 14px 40px; }
+      .hero, .section, .card { padding: 20px; }
+      .nav-inner { padding: 10px 14px; }
+    }
+  </style>
 </head>
-
 <body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <span class="brand">MIS 301 Study Guides</span>
+      <a href="index.html">Home</a>
+      <a href="chapter1.html">Chapter 1</a>
+      <a href="chapter6.html">Chapter 6</a>
+    </div>
+  </nav>
 
-<div class="header">
-<h1>Chapter 6</h1>
-<p>Moore’s Law</p>
-<a href="index.html" style="color:white;">← Back Home</a>
-</div>
+  <div class="container">
+    <section class="hero">
+      <h1>Chapter 1 Study Guide</h1>
+      <p><strong>Setting the Stage:</strong> Technology and the Modern Enterprise</p>
+      <p>This chapter introduces the foundations of information systems, why communication is difficult, and how mental models influence both technology design and business decisions.</p>
+    </section>
 
-<div class="container">
+    <section class="grid">
+      <div class="card">
+        <h2>What to Know</h2>
+        <p class="muted">This chapter is about understanding information systems as more than just technology. It also explains how people think, communicate, and miscommunicate when using systems.</p>
+      </div>
+      <div class="card">
+        <h2>Main Theme</h2>
+        <p class="muted">Technology works inside a broader system of data, processes, and human interpretation. Bad assumptions and weak communication can undermine even good tools.</p>
+      </div>
+      <div class="card">
+        <h2>Manager Takeaway</h2>
+        <p class="muted">Managers need to understand both the technical and human sides of information systems so they can communicate clearly and make better decisions.</p>
+      </div>
+    </section>
 
-<div class="card">
-<h2>Key Concepts</h2>
-<ul>
-<li>Computing power grows exponentially</li>
-<li>Costs decrease over time</li>
-<li>New opportunities emerge</li>
-</ul>
-</div>
+    <section class="section">
+      <h2 class="section-title">Vocabulary</h2>
 
-<div class="card">
-<h2>Quiz</h2>
+      <div class="term">
+        <h3>Information System (IS)</h3>
+        <p><span class="label">Definition:</span> An information system is a combination of hardware, software, data, and processes that works together to collect, process, store, and communicate information.</p>
+        <p><span class="label">Why it matters:</span> Managers are not just dealing with technology by itself. They are dealing with the entire system that produces useful information for decisions and operations.</p>
+        <p><span class="label">Example:</span> A university course registration platform depends on computers, software, stored student data, and the process used to add and drop classes.</p>
+      </div>
 
-<p>What does Moore’s Law describe?</p>
-<button onclick="check(this,'A')">A. Slower computing growth</button>
-<button onclick="check(this,'B')">B. Doubling of computing power</button>
-<button onclick="check(this,'C')">C. Internet speed</button>
+      <div class="term">
+        <h3>Mental Model</h3>
+        <p><span class="label">Definition:</span> A mental model is a learned way of thinking about how the world works.</p>
+        <p><span class="label">Why it matters:</span> People design systems and interpret information through mental models, so different assumptions can produce different system designs and decisions.</p>
+        <p><span class="label">Example:</span> Two managers may read the same dashboard differently because they have different assumptions about what the numbers mean.</p>
+      </div>
 
-<p id="result"></p>
+      <div class="term">
+        <h3>Curse of Knowledge</h3>
+        <p><span class="label">Definition:</span> The curse of knowledge is the tendency for people who already know something to have difficulty imagining what it is like not to know it.</p>
+        <p><span class="label">Why it matters:</span> It makes experts poor communicators when they assume that others already understand their background knowledge.</p>
+        <p><span class="label">Example:</span> A professor explaining Excel formulas in technical language may think the explanation is clear even when students are confused.</p>
+      </div>
 
-</div>
+      <div class="term">
+        <h3>Hardware</h3>
+        <p><span class="label">Definition:</span> Hardware is the physical equipment used in computing, such as computers, servers, phones, and networking devices.</p>
+        <p><span class="label">Why it matters:</span> Hardware is one of the core components of an information system and affects what software and processes can run.</p>
+        <p><span class="label">Example:</span> Laptops in a classroom and servers in a data center are hardware.</p>
+      </div>
 
-</div>
+      <div class="term">
+        <h3>Software</h3>
+        <p><span class="label">Definition:</span> Software is the set of instructions that tells hardware what to do.</p>
+        <p><span class="label">Why it matters:</span> Software determines how users interact with data and how the system performs tasks.</p>
+        <p><span class="label">Example:</span> Excel, Canvas, and web browsers are software.</p>
+      </div>
 
-<script>
-function check(btn, choice){
-  const result = document.getElementById("result");
+      <div class="term">
+        <h3>Data</h3>
+        <p><span class="label">Definition:</span> Data are raw facts, figures, or observations that can be stored and processed by an information system.</p>
+        <p><span class="label">Why it matters:</span> Information systems are only as useful as the quality and relevance of the data they contain and communicate.</p>
+        <p><span class="label">Example:</span> Student IDs, prices, and inventory counts are data.</p>
+      </div>
 
-  if(choice === "B"){
-    result.innerHTML = "Correct — computing power doubles.";
-    result.className = "correct";
-  } else {
-    result.innerHTML = "Incorrect — not Moore’s Law.";
-    result.className = "incorrect";
-  }
-}
-</script>
+      <div class="term">
+        <h3>Process</h3>
+        <p><span class="label">Definition:</span> A process is a set of steps or activities used to complete a task or achieve an outcome.</p>
+        <p><span class="label">Why it matters:</span> Software usually reflects assumptions about how a process should work, so weak process design can create weak systems.</p>
+        <p><span class="label">Example:</span> An order fulfillment process may include taking an order, checking stock, shipping the item, and recording the sale.</p>
+      </div>
 
+      <div class="term">
+        <h3>Technology Buzzwords</h3>
+        <p><span class="label">Definition:</span> Technology buzzwords are popular terms used to sound informed about technology without necessarily understanding the actual concepts behind them.</p>
+        <p><span class="label">Why it matters:</span> The chapter stresses that real technology literacy comes from understanding concepts, not just repeating trendy language.</p>
+        <p><span class="label">Example:</span> Using terms like “AI” or “cloud” without knowing what they mean is relying on buzzwords instead of knowledge.</p>
+      </div>
+
+      <div class="term">
+        <h3>Technology Literacy</h3>
+        <p><span class="label">Definition:</span> Technology literacy is the ability to understand and use core technology concepts in a thoughtful and practical way.</p>
+        <p><span class="label">Why it matters:</span> Managers need enough literacy to evaluate technology, communicate with others, and avoid being misled by hype.</p>
+        <p><span class="label">Example:</span> A manager who understands the basic parts of an information system can ask better questions before adopting a new tool.</p>
+      </div>
+
+      <div class="term">
+        <h3>Communication in Information Systems</h3>
+        <p><span class="label">Definition:</span> Communication in information systems refers to how information is transmitted, interpreted, and understood across the system.</p>
+        <p><span class="label">Why it matters:</span> Since information systems exist to communicate information, misunderstandings in communication can create poor decisions and weak system outcomes.</p>
+        <p><span class="label">Example:</span> A report may contain accurate data, but if managers interpret it differently, the information system still fails to support good action.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Key Concepts</h2>
+      <ul>
+        <li>Information systems are broader than just software or hardware.</li>
+        <li>Mental models influence how people design systems and interpret information.</li>
+        <li>The curse of knowledge makes communication especially difficult between experts and nonexperts.</li>
+        <li>Technology literacy requires understanding concepts instead of relying on buzzwords.</li>
+        <li>Even a strong technical tool can fail if the surrounding data and processes are weak.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Interactive Practice Quiz</h2>
+
+      <div class="question" data-qid="c1q1" data-correct="C">
+        <h3>1. A company buys new inventory software, but employees are still entering data inconsistently, managers disagree about the approval steps, and different departments interpret the reports differently. One executive says the firm’s information system problem should disappear because the software itself has already been upgraded.</h3>
+        <p><strong>Which response BEST reflects Chapter 1?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. The executive is right, because software is the only part of an information system that matters in practice</button>
+          <button class="choice-btn" data-choice="B">B. The executive is partly right, because hardware and software are the only two meaningful components of an information system</button>
+          <button class="choice-btn" data-choice="C">C. The executive is wrong, because information systems also depend on data and processes, not just software</button>
+          <button class="choice-btn" data-choice="D">D. The executive is wrong, but only because all data should be replaced before a new system is used</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q2" data-correct="B">
+        <h3>2. A professor explains a spreadsheet formula using technical language that makes perfect sense to her, but her students remain confused. She keeps repeating the same explanation and assumes the students simply are not paying attention.</h3>
+        <p><strong>Which concept BEST explains the communication problem?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Network effects, because more students would make the explanation more valuable</button>
+          <button class="choice-btn" data-choice="B">B. Curse of knowledge, because the professor has trouble imagining what it is like not to understand the formula</button>
+          <button class="choice-btn" data-choice="C">C. Open standards, because spreadsheet formulas should be compatible across platforms</button>
+          <button class="choice-btn" data-choice="D">D. Digital convergence, because formulas and explanations are being combined into one lesson</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q3" data-correct="A">
+        <h3>3. Two managers review the same dashboard and reach different conclusions about what the numbers mean. One sees the figures as proof that demand is growing, while the other believes the same figures show operations are becoming inefficient. Neither manager is lying; they are simply interpreting the information differently.</h3>
+        <p><strong>What is the BEST explanation for this difference?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. They may have different mental models that shape how they interpret the same information</button>
+          <button class="choice-btn" data-choice="B">B. They are using different hardware, so the dashboard must be displaying different data</button>
+          <button class="choice-btn" data-choice="C">C. They must be dealing with a closed standard rather than an open standard</button>
+          <button class="choice-btn" data-choice="D">D. Their disagreement proves the information system contains no useful data</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q4" data-correct="D">
+        <h3>4. A student is told to learn a new software tool on her own by comparing help pages, tutorials, and examples. She notices that some online advice conflicts, especially when people use different operating systems or are giving opinions instead of facts.</h3>
+        <p><strong>Which lesson from Chapter 1 is MOST relevant?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Learning independently means accepting the first answer found online</button>
+          <button class="choice-btn" data-choice="B">B. Learning independently only works when every source agrees perfectly</button>
+          <button class="choice-btn" data-choice="C">C. Learning independently eliminates the need to evaluate whether a source is trustworthy</button>
+          <button class="choice-btn" data-choice="D">D. Learning independently requires finding reliable sources and distinguishing fact from opinion</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q5" data-correct="C">
+        <h3>5. A manager says, “Technology strategy is easy. I just need to know the latest buzzwords so I sound current in meetings.” Another manager disagrees and says that long-term success requires understanding the underlying concepts instead of repeating fashionable terms.</h3>
+        <p><strong>Which view is MOST consistent with the chapter?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. The first manager is right, because buzzwords are usually enough to guide good technology decisions</button>
+          <button class="choice-btn" data-choice="B">B. Both managers are wrong, because technology concepts do not matter for business work</button>
+          <button class="choice-btn" data-choice="C">C. The second manager is right, because real technology literacy depends on understanding concepts rather than memorizing trendy language</button>
+          <button class="choice-btn" data-choice="D">D. The first manager is right, because sounding informed matters more than actually understanding the system</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+    </section>
+
+    <footer>
+      MIS 301 Extra Credit Study Guide • Chapter 1
+    </footer>
+  </div>
+
+  <script>
+    const feedbackMap = {
+      c1q1: {
+        correct: 'C',
+        rationale: {
+          A: 'A is incorrect because software is only one component of an information system. The chapter emphasizes that information systems also include hardware, data, and processes.',
+          B: 'B is incorrect because the system is broader than hardware and software alone. Weak data and poor processes can still make the overall system fail.',
+          C: 'C is correct because Chapter 1 treats an information system as more than just software. Upgrading only the software does not automatically solve problems in the surrounding data and process structure.',
+          D: 'D is incorrect because replacing all data is not the core lesson of the chapter. The main point is that the executive is overlooking the full system, not just one specific technical fix.'
+        }
+      },
+      c1q2: {
+        correct: 'B',
+        rationale: {
+          A: 'A is incorrect because network effects involve products becoming more valuable as more users join. That has nothing to do with the professor struggling to explain a concept.',
+          B: 'B is correct because the curse of knowledge occurs when someone who understands something well has difficulty imagining what it is like not to know it. That makes experts poor communicators.',
+          C: 'C is incorrect because open standards concern compatibility and permission to build complementary products. The communication problem here is about explanation, not standards.',
+          D: 'D is incorrect because digital convergence refers to multiple technologies merging into one product or platform. It does not explain why an expert is failing to teach clearly.'
+        }
+      },
+      c1q3: {
+        correct: 'A',
+        rationale: {
+          A: 'A is correct because mental models shape how people interpret information. Two managers can view the same data and reach different conclusions because they bring different assumptions to the situation.',
+          B: 'B is incorrect because using different hardware does not automatically mean the dashboard data differ. The scenario is about interpretation, not device inconsistency.',
+          C: 'C is incorrect because open versus closed standards is not the relevant concept. The disagreement is caused by different ways of thinking, not compatibility rules.',
+          D: 'D is incorrect because disagreement about meaning does not prove the data are useless. It more likely shows that interpretation depends on the user’s mental model.'
+        }
+      },
+      c1q4: {
+        correct: 'D',
+        rationale: {
+          A: 'A is incorrect because learning independently does not mean blindly accepting the first result. The chapter stresses judgment and source evaluation.',
+          B: 'B is incorrect because conflicting sources are common, especially when operating systems differ or when advice is based on opinion rather than fact.',
+          C: 'C is incorrect because the need to evaluate trustworthiness is one of the chapter’s main lessons. Independent learning requires critical thinking, not less of it.',
+          D: 'D is correct because the chapter explicitly says that good self-directed learning depends on finding trustworthy sources and distinguishing fact from opinion.'
+        }
+      },
+      c1q5: {
+        correct: 'C',
+        rationale: {
+          A: 'A is incorrect because relying on buzzwords can make someone sound current without actually understanding the technology. The chapter warns against exactly that mistake.',
+          B: 'B is incorrect because technology concepts do matter for business work. The course emphasizes tech literacy and real understanding.',
+          C: 'C is correct because the slides explicitly argue that long-term success requires understanding concepts, not just repeating fashionable terms.',
+          D: 'D is incorrect because sounding informed is not a substitute for understanding. The chapter is about real literacy, not appearance.'
+        }
+      }
+    };
+
+    function buildFullExplanation(qid) {
+      const letters = ['A', 'B', 'C', 'D'];
+      const items = letters.map(letter => `<li><strong>${letter}.</strong> ${feedbackMap[qid].rationale[letter]}</li>`).join('');
+      return `<div style="margin-top:10px;"><strong>Answer review for all choices:</strong></div><ul style="margin-top:10px; padding-left:20px;">${items}</ul>`;
+    }
+
+    document.querySelectorAll('.question').forEach((questionEl) => {
+      const qid = questionEl.dataset.qid;
+      const buttons = questionEl.querySelectorAll('.choice-btn');
+      const feedback = questionEl.querySelector('.feedback');
+      const correct = questionEl.dataset.correct;
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = btn.dataset.choice;
+
+          buttons.forEach(b => {
+            b.disabled = true;
+            b.classList.remove('correct-choice', 'incorrect-choice');
+            if (b.dataset.choice === correct) b.classList.add('correct-choice');
+            if (b.dataset.choice === selected && selected !== correct) b.classList.add('incorrect-choice');
+          });
+
+          const fullExplanation = buildFullExplanation(qid);
+
+          if (selected === correct) {
+            feedback.className = 'feedback show correct';
+            feedback.innerHTML = `<strong>Correct.</strong> You chose the right answer. ${feedbackMap[qid].rationale[correct]}${fullExplanation}`;
+          } else {
+            feedback.className = 'feedback show incorrect';
+            feedback.innerHTML = `<strong>Incorrect.</strong> You chose ${selected}, but the correct answer is ${correct}. ${feedbackMap[qid].rationale[selected]} ${feedbackMap[qid].rationale[correct]}${fullExplanation}`;
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
