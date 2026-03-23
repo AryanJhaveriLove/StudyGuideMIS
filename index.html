@@ -415,6 +415,14 @@
       }
     };
 
+    function buildFullExplanation(qNum) {
+      const letters = ['A', 'B', 'C', 'D'];
+      const items = letters.map(letter => {
+        return `<li><strong>${letter}.</strong> ${feedbackMap[qNum].rationale[letter]}</li>`;
+      }).join('');
+      return `<div style="margin-top:10px;"><strong>Answer review for all choices:</strong></div><ul style="margin-top:10px; padding-left:20px;">${items}</ul>`;
+    }
+
     document.querySelectorAll('.question').forEach((questionEl, index) => {
       const qNum = index + 1;
       const buttons = questionEl.querySelectorAll('.choice-btn');
@@ -427,6 +435,7 @@
 
           buttons.forEach(b => {
             b.disabled = true;
+            b.classList.remove('correct-choice', 'incorrect-choice');
             if (b.dataset.choice === correct) {
               b.classList.add('correct-choice');
             }
@@ -435,21 +444,14 @@
             }
           });
 
-          let fullExplanation = '<div><strong>Answer review:</strong></div><ul style="margin-top:10px; padding-left:20px;">';
-
-          ['A','B','C','D'].forEach(letter => {
-            fullExplanation += `<li><strong>${letter}.</strong> ${feedbackMap[qNum].rationale[letter]}</li>`;
-          });
-
-          fullExplanation += '</ul>';
+          const fullExplanation = buildFullExplanation(qNum);
 
           if (selected === correct) {
             feedback.className = 'feedback show correct';
-            feedback.innerHTML = `<strong>Correct.</strong> You chose the right answer.${fullExplanation}`;
+            feedback.innerHTML = `<strong>Correct.</strong> You chose the right answer. ${feedbackMap[qNum].rationale[correct]}${fullExplanation}`;
           } else {
             feedback.className = 'feedback show incorrect';
-            feedback.innerHTML = `<strong>Incorrect.</strong> You chose ${selected}, but the correct answer is ${correct}.${fullExplanation}`;
-          }`;
+            feedback.innerHTML = `<strong>Incorrect.</strong> You chose ${selected}, but the correct answer is ${correct}. ${feedbackMap[qNum].rationale[selected]} ${feedbackMap[qNum].rationale[correct]}${fullExplanation}`;
           }
         });
       });
