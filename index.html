@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chapter 6 Study Guide - Moore's Law and More</title>
+  <title>MIS 301 Study Guides (Chapters 1–10)</title>
   <style>
     :root {
       --bg: #f7f7f8;
@@ -11,11 +11,15 @@
       --text: #1f2937;
       --muted: #6b7280;
       --accent: #bf5700;
+      --accent-dark: #8f3f00;
       --border: #e5e7eb;
       --success: #166534;
+      --error: #991b1b;
     }
 
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -25,6 +29,46 @@
       line-height: 1.6;
     }
 
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 10px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .nav a:hover {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: var(--accent-dark);
+    }
+
     .container {
       max-width: 1050px;
       margin: 0 auto;
@@ -32,7 +76,7 @@
     }
 
     .hero {
-      background: linear-gradient(135deg, #bf5700 0%, #8f3f00 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
       color: white;
       border-radius: 24px;
       padding: 40px 32px;
@@ -49,12 +93,12 @@
     .hero p {
       margin: 8px 0;
       font-size: 1.05rem;
-      max-width: 760px;
+      max-width: 780px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 18px;
       margin-bottom: 28px;
     }
@@ -72,6 +116,11 @@
       color: var(--accent);
     }
 
+    .chapter {
+      margin-top: 34px;
+      scroll-margin-top: 90px;
+    }
+
     .section {
       background: var(--card);
       border: 1px solid var(--border);
@@ -87,13 +136,15 @@
       margin-top: 18px;
     }
 
-    .term:first-of-type {
+    .term:first-of-type,
+    .question:first-of-type {
       border-top: none;
       padding-top: 0;
       margin-top: 0;
     }
 
-    .term h3 {
+    .term h3,
+    .question h3 {
       margin: 0 0 10px;
       font-size: 1.2rem;
     }
@@ -118,12 +169,6 @@
       margin-top: 18px;
     }
 
-    .question:first-of-type {
-      border-top: none;
-      padding-top: 0;
-      margin-top: 0;
-    }
-
     .feedback {
       margin-top: 14px;
       padding: 14px 16px;
@@ -133,20 +178,16 @@
       display: none;
     }
 
-    .feedback.show {
-      display: block;
-    }
-
+    .feedback.show { display: block; }
     .feedback.correct {
       background: #f0fdf4;
       border-color: #bbf7d0;
-      color: #166534;
+      color: var(--success);
     }
-
     .feedback.incorrect {
       background: #fef2f2;
       border-color: #fecaca;
-      color: #991b1b;
+      color: var(--error);
     }
 
     .choices {
@@ -189,6 +230,11 @@
       opacity: 1;
     }
 
+    .coming-soon {
+      border: 2px dashed #fdba74;
+      background: #fff7ed;
+    }
+
     footer {
       text-align: center;
       color: var(--muted);
@@ -200,12 +246,226 @@
       .hero h1 { font-size: 1.9rem; }
       .container { padding: 20px 14px 40px; }
       .hero, .section, .card { padding: 20px; }
+      .nav-inner { padding: 10px 14px; }
     }
   </style>
 </head>
 <body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <span class="brand">MIS 301 Study Guides</span>
+      <a href="#home">Home</a>
+      <a href="#chapter1">Ch 1</a>
+      <a href="#chapter2">Ch 2</a>
+      <a href="#chapter3">Ch 3</a>
+      <a href="#chapter4">Ch 4</a>
+      <a href="#chapter5">Ch 5</a>
+      <a href="#chapter6">Ch 6</a>
+      <a href="#chapter7">Ch 7</a>
+      <a href="#chapter8">Ch 8</a>
+      <a href="#chapter9">Ch 9</a>
+      <a href="#chapter10">Ch 10</a>
+    </div>
+  </nav>
+
   <div class="container">
-    <section class="hero">
+    <section id="home" class="hero">
+      <h1>MIS 301 Study Guides (Chapters 1–10)</h1>
+      <p>This website is organized by chapter and designed for extra credit study guide work. Each chapter follows the same format: vocabulary, why the concepts matter, examples, key concepts, and an interactive quiz.</p>
+      <p>Use the menu at the top to jump directly to a chapter. Chapter 1 is now added, and Chapter 6 has been kept in the original format you approved.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>How to Use This Site</h2>
+        <p class="muted">Study the vocabulary first, then review the key concepts, then take the quiz. Use the explanations after each question to understand why every answer choice is right or wrong.</p>
+      </div>
+      <div class="card">
+        <h2>Assignment Fit</h2>
+        <p class="muted">Each chapter is built to match your professor’s directions: precise definitions, slide-based topics, and five multiple choice questions with one clear best answer.</p>
+      </div>
+      <div class="card">
+        <h2>Current Progress</h2>
+        <p class="muted">Complete now: Chapter 1 and Chapter 6. Placeholders are ready for Chapters 2–5 and 7–10 so the site can grow cleanly without changing the structure.</p>
+      </div>
+    </section>
+
+    <section id="chapter1" class="chapter hero">
+      <h1>Chapter 1 Study Guide</h1>
+      <p><strong>Setting the Stage:</strong> Technology and the Modern Enterprise</p>
+      <p>This chapter introduces how information systems work, why communication is difficult, and how mental models influence both business decisions and technology design.</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Vocabulary</h2>
+
+      <div class="term">
+        <h3>Information System (IS)</h3>
+        <p><span class="label">Definition:</span> An information system is a combination of hardware, software, data, processes, and people that works together to collect, process, store, and communicate information.</p>
+        <p><span class="label">Why it matters:</span> Managers do not just manage technology; they manage the entire system that produces and communicates information.</p>
+        <p><span class="label">Example:</span> A university registration platform depends on hardware, software, stored student data, business rules, and staff and students who use it.</p>
+      </div>
+
+      <div class="term">
+        <h3>Mental Model</h3>
+        <p><span class="label">Definition:</span> A mental model is a learned way of thinking about how the world works.</p>
+        <p><span class="label">Why it matters:</span> People design systems and interpret information through their mental models, so different assumptions can lead to different system designs and decisions.</p>
+        <p><span class="label">Example:</span> A spreadsheet designer who thinks in binary true/false logic may design formulas differently from a user who thinks more intuitively.</p>
+      </div>
+
+      <div class="term">
+        <h3>Curse of Knowledge</h3>
+        <p><span class="label">Definition:</span> The curse of knowledge is the tendency for people who already know something to have difficulty imagining what it is like not to know it.</p>
+        <p><span class="label">Why it matters:</span> It makes experts poor communicators if they assume everyone else understands the same background knowledge.</p>
+        <p><span class="label">Example:</span> An IT expert may explain a software process using technical terms that confuse nontechnical users.</p>
+      </div>
+
+      <div class="term">
+        <h3>Self-Directed Learning</h3>
+        <p><span class="label">Definition:</span> Self-directed learning is the process of identifying what you need to learn, finding reliable sources, and teaching yourself how to solve a problem.</p>
+        <p><span class="label">Why it matters:</span> Technology changes quickly, so managers and employees must often learn new tools without waiting for formal instruction.</p>
+        <p><span class="label">Example:</span> Learning how to use a new version of Excel by comparing documentation and tutorials is self-directed learning.</p>
+      </div>
+
+      <div class="term">
+        <h3>Hardware</h3>
+        <p><span class="label">Definition:</span> Hardware is the physical equipment used in computing, such as computers, servers, phones, or networking devices.</p>
+        <p><span class="label">Why it matters:</span> Hardware is one of the core components of an information system.</p>
+        <p><span class="label">Example:</span> Laptops in a classroom or servers in a data center are hardware.</p>
+      </div>
+
+      <div class="term">
+        <h3>Software</h3>
+        <p><span class="label">Definition:</span> Software is the set of instructions that tells hardware what to do.</p>
+        <p><span class="label">Why it matters:</span> Software determines how users interact with technology and how data is processed.</p>
+        <p><span class="label">Example:</span> Excel, a browser, and a mobile app are all software.</p>
+      </div>
+
+      <div class="term">
+        <h3>Data</h3>
+        <p><span class="label">Definition:</span> Data are raw facts, figures, or observations that can be stored and processed by an information system.</p>
+        <p><span class="label">Why it matters:</span> Information systems are only as good as the data they collect and communicate.</p>
+        <p><span class="label">Example:</span> Student IDs, test scores, and sales records are data.</p>
+      </div>
+
+      <div class="term">
+        <h3>Process</h3>
+        <p><span class="label">Definition:</span> A process is a set of steps or activities used to complete a task or achieve an outcome.</p>
+        <p><span class="label">Why it matters:</span> Software often reflects the assumptions people make about how processes should work.</p>
+        <p><span class="label">Example:</span> The process for ordering inventory may include approval, purchasing, receiving, and accounting.</p>
+      </div>
+
+      <div class="term">
+        <h3>People</h3>
+        <p><span class="label">Definition:</span> People are the users, managers, designers, and decision-makers who create, operate, and depend on an information system.</p>
+        <p><span class="label">Why it matters:</span> People shape the system through their assumptions, goals, and communication.</p>
+        <p><span class="label">Example:</span> Employees entering data incorrectly can reduce the quality of an otherwise well-designed system.</p>
+      </div>
+
+      <div class="term">
+        <h3>Technology Buzzwords</h3>
+        <p><span class="label">Definition:</span> Technology buzzwords are popular terms used to sound informed about technology without necessarily understanding the underlying concepts.</p>
+        <p><span class="label">Why it matters:</span> The chapter stresses that real success requires understanding concepts, not just repeating fashionable terms.</p>
+        <p><span class="label">Example:</span> Saying “AI” or “cloud” without knowing what the technology actually does is relying on buzzwords.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Key Concepts</h2>
+      <ul>
+        <li>Information systems are not just technology. They include hardware, software, data, processes, and people.</li>
+        <li>People design and interpret systems through their mental models.</li>
+        <li>The curse of knowledge makes communication harder, especially between experts and nonexperts.</li>
+        <li>Self-directed learning matters because modern workers constantly need to adapt to new tools and systems.</li>
+        <li>Technology literacy requires understanding concepts instead of memorizing buzzwords.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Interactive Practice Quiz</h2>
+
+      <div class="question" data-qid="c1q1" data-correct="C">
+        <h3>1. A company buys new inventory software, but employees are still entering data inconsistently, managers disagree about the approval steps, and different departments interpret the reports differently. One executive says the firm’s information system problem should disappear because the software itself has already been upgraded.</h3>
+        <p><strong>Which response BEST reflects Chapter 1?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. The executive is right, because software is the only part of an information system that matters in practice</button>
+          <button class="choice-btn" data-choice="B">B. The executive is partly right, because hardware and software are the only two meaningful components of an information system</button>
+          <button class="choice-btn" data-choice="C">C. The executive is wrong, because information systems also depend on people, data, and processes, not just software</button>
+          <button class="choice-btn" data-choice="D">D. The executive is wrong, but only because all data should be replaced before a new system is used</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q2" data-correct="B">
+        <h3>2. A professor explains a spreadsheet formula using technical language that makes perfect sense to her, but her students remain confused. She keeps repeating the same explanation and assumes the students simply are not paying attention.</h3>
+        <p><strong>Which concept BEST explains the communication problem?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Network effects, because more students would make the explanation more valuable</button>
+          <button class="choice-btn" data-choice="B">B. Curse of knowledge, because the professor has trouble imagining what it is like not to understand the formula</button>
+          <button class="choice-btn" data-choice="C">C. Open standards, because spreadsheet formulas should be compatible across platforms</button>
+          <button class="choice-btn" data-choice="D">D. Digital convergence, because formulas and explanations are being combined into one lesson</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q3" data-correct="A">
+        <h3>3. Two managers review the same dashboard and reach different conclusions about what the numbers mean. One sees the figures as proof that demand is growing, while the other believes the same figures show operations are becoming inefficient. Neither manager is lying; they are simply interpreting the information differently.</h3>
+        <p><strong>What is the BEST explanation for this difference?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. They may have different mental models that shape how they interpret the same information</button>
+          <button class="choice-btn" data-choice="B">B. They are using different hardware, so the dashboard must be displaying different data</button>
+          <button class="choice-btn" data-choice="C">C. They must be dealing with a closed standard rather than an open standard</button>
+          <button class="choice-btn" data-choice="D">D. Their disagreement proves the information system contains no useful data</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q4" data-correct="D">
+        <h3>4. A student is told to learn a new software tool on her own by comparing help pages, tutorials, and examples. She notices that some online advice conflicts, especially when people use different operating systems or are giving opinions instead of facts.</h3>
+        <p><strong>Which lesson from Chapter 1 is MOST relevant?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Self-directed learning means accepting the first answer found online</button>
+          <button class="choice-btn" data-choice="B">B. Self-directed learning only works when every source agrees perfectly</button>
+          <button class="choice-btn" data-choice="C">C. Self-directed learning eliminates the need to evaluate whether a source is trustworthy</button>
+          <button class="choice-btn" data-choice="D">D. Self-directed learning requires finding reliable sources and distinguishing fact from opinion</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c1q5" data-correct="C">
+        <h3>5. A manager says, “Technology strategy is easy. I just need to know the latest buzzwords so I sound current in meetings.” Another manager disagrees and says that long-term success requires understanding the underlying concepts instead of repeating fashionable terms.</h3>
+        <p><strong>Which view is MOST consistent with the chapter?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. The first manager is right, because buzzwords are usually enough to guide good technology decisions</button>
+          <button class="choice-btn" data-choice="B">B. Both managers are wrong, because technology concepts do not matter for business work</button>
+          <button class="choice-btn" data-choice="C">C. The second manager is right, because real technology literacy depends on understanding concepts rather than memorizing trendy language</button>
+          <button class="choice-btn" data-choice="D">D. The first manager is right, because mental models are less important than sounding informed</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+    </section>
+
+    <section id="chapter2" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 2 Placeholder</h2>
+      <p>Strategy and Technology will be added next in the same format.</p>
+    </section>
+
+    <section id="chapter3" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 3 Placeholder</h2>
+      <p>Platforms, Network Effects, and Competing in a Winner-Take-All World will be added next in the same format.</p>
+    </section>
+
+    <section id="chapter4" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 4 Placeholder</h2>
+      <p>Disruptive Technologies will be added next in the same format.</p>
+    </section>
+
+    <section id="chapter5" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 5 Placeholder</h2>
+      <p>Zara: Fast Fashion from Savvy Systems will be added next in the same format.</p>
+    </section>
+
+    <section id="chapter6" class="chapter hero">
       <h1>Chapter 6 Study Guide</h1>
       <p><strong>Moore's Law and More:</strong> Fast/Cheap Computing and What This Means for the Manager</p>
       <p>This study guide includes precise vocabulary, clear explanations, and a 5-question multiple choice quiz for review.</p>
@@ -300,7 +560,7 @@
     <section class="section">
       <h2 class="section-title">Interactive Practice Quiz</h2>
 
-      <div class="question" data-correct="B">
+      <div class="question" data-qid="c6q1" data-correct="B">
         <h3>1. A student startup is building an AI note-taking app for UT students. Two years ago, the team could not afford enough computing power to run speech-to-text and summary tools at a useful level. Now, cloud computing prices have dropped, and the app can offer those features at a student-friendly price. The founders are debating whether this shift is mostly about better strategy, stronger branding, or a basic change in technology economics.</h3>
         <p><strong>Which concept BEST explains why the startup can now offer advanced features to many more students?</strong></p>
         <div class="choices">
@@ -312,7 +572,7 @@
         <div class="feedback"></div>
       </div>
 
-      <div class="question" data-correct="D">
+      <div class="question" data-qid="c6q2" data-correct="D">
         <h3>2. A campus job board used to be slow and hard to search, so students ignored it. Over the last few years, faster hardware and cheaper storage let the university add filters, instant search, resume matching, and AI suggestions without charging students. One manager says the upgrade happened gradually, but another says the real lesson is that small technical improvements can add up and create much bigger business changes than people expect.</h3>
         <p><strong>What is the MOST accurate reason managers often misjudge changes like this?</strong></p>
         <div class="choices">
@@ -324,7 +584,7 @@
         <div class="feedback"></div>
       </div>
 
-      <div class="question" data-correct="A">
+      <div class="question" data-qid="c6q3" data-correct="A">
         <h3>3. A student compares her phone to the devices her parents carried in college: a phone, camera, GPS, iPod, flashlight, and paper planner. She realizes one modern device now performs all of those roles well enough for daily use. A classmate argues that this is just an example of brand loyalty, but her professor says the better explanation is that cheaper and more powerful computing let many digital functions merge into one product.</h3>
         <p><strong>Which concept BEST fits this scenario?</strong></p>
         <div class="choices">
@@ -336,7 +596,7 @@
         <div class="feedback"></div>
       </div>
 
-      <div class="question" data-correct="C">
+      <div class="question" data-qid="c6q4" data-correct="C">
         <h3>4. A small tutoring company avoided using AI tools last year because the software was too expensive and too slow for everyday work. This year, the same company uses AI to draft practice questions, summarize readings, and organize lesson plans because those tasks now run quickly and cheaply enough to fit a normal budget. The owner says the company did not suddenly become more creative; instead, the economics of computing changed what was practical.</h3>
         <p><strong>Which interpretation is MOST consistent with Moore’s Law and this chapter’s discussion?</strong></p>
         <div class="choices">
@@ -348,7 +608,7 @@
         <div class="feedback"></div>
       </div>
 
-      <div class="question" data-correct="B">
+      <div class="question" data-qid="c6q5" data-correct="B">
         <h3>5. During a strategy meeting, an intern says that because laptops are already fast, future hardware improvements will not matter very much to business decisions. Another intern argues that even modest improvements can unlock new products when those gains happen repeatedly over time and at lower cost. The manager wants to know which view better matches how computing usually affects markets.</h3>
         <p><strong>Which response is BEST?</strong></p>
         <div class="choices">
@@ -361,70 +621,133 @@
       </div>
     </section>
 
+    <section id="chapter7" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 7 Placeholder</h2>
+      <p>Understanding Software: A Primer for Managers will be added next in the same format.</p>
+    </section>
+
+    <section id="chapter8" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 8 Placeholder</h2>
+      <p>Free the Code: Open Source Software will be added next in the same format.</p>
+    </section>
+
+    <section id="chapter9" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 9 Placeholder</h2>
+      <p>Cloud Computing and Its Commercialization at Amazon will be added next in the same format.</p>
+    </section>
+
+    <section id="chapter10" class="chapter section coming-soon">
+      <h2 class="section-title">Chapter 10 Placeholder</h2>
+      <p>Software Development — Tradeoffs and Total Costs will be added next in the same format.</p>
+    </section>
+
     <footer>
-      MIS 301 Extra Credit Study Guide • Chapter 6 Template
+      MIS 301 Extra Credit Study Guides • Chapters 1–10
     </footer>
   </div>
 
   <script>
     const feedbackMap = {
-      1: {
-        correct: 'B',
-        rationale: {
-          A: "A is incorrect because switching costs describe how difficult it is for users to leave a product after adopting it. This scenario is mainly about why the startup can now offer advanced AI features at an affordable price, not about what makes students stay later.",
-          B: "B is correct because the chapter emphasizes that when computing becomes cheaper, demand rises and new uses become practical. The startup can now deliver speech-to-text and summaries at a student-friendly price because falling computing costs changed the economics of the product.",
-          C: "C is incorrect because vertical integration means a firm controls multiple stages of production or distribution. Nothing in the scenario suggests the startup now owns more of its supply chain or internalizes outside partners.",
-          D: "D is incorrect because bargaining power of suppliers refers to the leverage suppliers have over a firm. The key issue here is not cloud providers forcing adoption, but rather lower computing costs making advanced features affordable."
-        }
-      },
-      2: {
-        correct: 'D',
-        rationale: {
-          A: "A is incorrect because the scenario is not about managers assuming demand stays fixed. The main problem is that they fail to understand how repeated technical improvements can compound over time.",
-          B: "B is incorrect because although hardware matters, the question is asking why managers misjudge the size of change. The deeper lesson is about misunderstanding exponential improvement, not simply ignoring users.",
-          C: "C is incorrect because nothing in the scenario suggests managers ignored customer preferences. The issue is their failure to recognize how gradual technical changes can accumulate into major service improvements.",
-          D: "D is correct because the chapter’s core idea is that managers often think linearly even though technology improves exponentially. That blind spot causes them to underestimate how much small improvements can eventually transform a product or market."
-        }
-      },
-      3: {
-        correct: 'A',
-        rationale: {
-          A: "A is correct because digital convergence means that many separate technologies and functions combine into one device or platform. The phone replacing a camera, GPS, music player, and planner is a direct example of convergence.",
-          B: "B is incorrect because capital intensity refers to the need for large upfront investments in facilities or equipment. That does not explain why one device now performs many different digital functions.",
-          C: "C is incorrect because network effects occur when a product becomes more valuable as more people use it. The scenario is about combining technologies inside one device, not about value increasing from a growing user base.",
-          D: "D is incorrect because switching costs might help keep users in a phone ecosystem, but they do not explain why one product absorbed the roles of many separate devices."
-        }
-      },
-      4: {
+      c1q1: {
         correct: 'C',
         rationale: {
-          A: "A is incorrect because customer price sensitivity is not the main issue in the scenario. The company adopted AI tools because the underlying technology became affordable and practical, not because customers changed how they react to prices.",
-          B: "B is incorrect because barriers to entry concern how hard it is for new firms to enter an industry. The scenario is focused on a current firm gaining access to advanced tools, not on blocking competitors from entering tutoring.",
-          C: "C is correct because the chapter explains that falling computing costs make computationally intensive applications available to more firms. The tutoring company could now use AI because the cost and speed of computing improved enough to make those tasks practical.",
-          D: "D is incorrect because falling computing costs affect far more than hardware manufacturers. Service businesses also benefit when software that used to be too expensive or slow becomes affordable and useful."
+          A: 'A is incorrect because software is only one component of an information system. The chapter emphasizes that information systems also include hardware, data, processes, and people.',
+          B: 'B is incorrect because the system is broader than hardware and software alone. Poor data quality, weak processes, and confused users can still make the overall system fail.',
+          C: 'C is correct because Chapter 1 defines an information system as a combination of hardware, software, data, processes, and people. Upgrading only the software does not automatically solve problems in the other parts of the system.',
+          D: 'D is incorrect because replacing all data is not the core lesson of the chapter. The main point is that the executive is overlooking the full system, not just one specific technical fix.'
         }
       },
-      5: {
+      c1q2: {
         correct: 'B',
         rationale: {
-          A: "A is incorrect because the chapter argues that even when devices already seem fast, continued gains in price and performance can still create new applications and higher demand. Demand does not simply stop once products feel good enough.",
-          B: "B is correct because repeated improvements in computing power and price/performance often open the door to entirely new products, services, and business models. That is one of the main managerial implications of Moore’s Law.",
-          C: "C is incorrect because software design is important, but the chapter specifically emphasizes that hardware improvements shape what software and services become feasible in the first place.",
-          D: "D is incorrect because ignoring future computing capability is exactly the kind of managerial blind spot this chapter warns against. Managers should care about how today’s technical trends create tomorrow’s strategic opportunities."
+          A: 'A is incorrect because network effects involve products becoming more valuable as more users join. That has nothing to do with the professor struggling to explain a concept to confused students.',
+          B: 'B is correct because the curse of knowledge occurs when someone who understands something well has difficulty imagining what it is like not to know it. That makes experts poor communicators if they assume others already share the same background.',
+          C: 'C is incorrect because open standards concern compatibility and permission to build complementary products. The communication problem here is about explanation, not standards.',
+          D: 'D is incorrect because digital convergence refers to multiple technologies merging into one product or platform. It does not explain why an expert is failing to teach clearly.'
+        }
+      },
+      c1q3: {
+        correct: 'A',
+        rationale: {
+          A: 'A is correct because mental models shape how people interpret information. Two managers can look at the same data and draw different conclusions because they bring different assumptions and frameworks to the situation.',
+          B: 'B is incorrect because using different hardware does not automatically mean the dashboard data differ. The scenario is about interpretation, not device inconsistency.',
+          C: 'C is incorrect because open versus closed standards is not the relevant concept. The disagreement is caused by different ways of thinking, not compatibility rules.',
+          D: 'D is incorrect because disagreement about meaning does not prove the data are useless. It more likely shows that interpretation depends on the user’s mental model.'
+        }
+      },
+      c1q4: {
+        correct: 'D',
+        rationale: {
+          A: 'A is incorrect because self-directed learning does not mean blindly accepting the first result. The chapter stresses judgment and source evaluation.',
+          B: 'B is incorrect because conflicting sources are common, especially when operating systems differ or when advice is based on opinion rather than fact.',
+          C: 'C is incorrect because the need to evaluate trustworthiness is one of the chapter’s main lessons. Self-directed learning requires critical thinking, not less of it.',
+          D: 'D is correct because the chapter explicitly says self-directed learning depends on finding trustworthy sources and distinguishing fact from opinion.'
+        }
+      },
+      c1q5: {
+        correct: 'C',
+        rationale: {
+          A: 'A is incorrect because relying on buzzwords can make someone sound current without actually understanding the technology. The chapter warns against exactly that mistake.',
+          B: 'B is incorrect because technology concepts do matter for business work. The course emphasizes tech literacy and understanding how systems function in organizations.',
+          C: 'C is correct because the slides explicitly argue that long-term success requires understanding concepts, not just repeating popular technology language.',
+          D: 'D is incorrect because mental models are central to how people understand systems and make decisions. Sounding informed is not a substitute for real understanding.'
+        }
+      },
+      c6q1: {
+        correct: 'B',
+        rationale: {
+          A: 'A is incorrect because switching costs describe how difficult it is for users to leave a product after adoption. This scenario is about why advanced features became affordable, not why students stay later.',
+          B: 'B is correct because when computing becomes cheaper, new uses become practical and demand expands. The startup can now offer advanced AI features at a student-friendly price because falling computing costs changed the economics.',
+          C: 'C is incorrect because vertical integration means a firm controls multiple stages of production or distribution. Nothing here suggests that the startup now owns more of its supply chain.',
+          D: 'D is incorrect because bargaining power of suppliers concerns supplier leverage. The key issue here is cheaper computing, not cloud providers forcing student adoption.'
+        }
+      },
+      c6q2: {
+        correct: 'D',
+        rationale: {
+          A: 'A is incorrect because the scenario is not about managers assuming demand is fixed. The problem is underestimating how quickly technical change compounds over time.',
+          B: 'B is incorrect because the issue is not simply ignoring users. The chapter’s deeper point is that managers misread exponential improvement.',
+          C: 'C is incorrect because nothing suggests managers ignored customer preferences. The challenge is understanding how gradual technical improvements can accumulate into major business change.',
+          D: 'D is correct because managers often think linearly even though technology improves exponentially. That causes them to underestimate how much repeated improvements can transform a service or market.'
+        }
+      },
+      c6q3: {
+        correct: 'A',
+        rationale: {
+          A: 'A is correct because digital convergence means many separate technologies combine into one device or platform. The smartphone replacing many older tools is a direct example.',
+          B: 'B is incorrect because capital intensity concerns large upfront investment, not the merging of multiple product functions into one device.',
+          C: 'C is incorrect because network effects are about value increasing with more users. The scenario is about combining technologies, not user-base growth.',
+          D: 'D is incorrect because switching costs may keep users in an ecosystem, but they do not explain why one device replaced many separate products.'
+        }
+      },
+      c6q4: {
+        correct: 'C',
+        rationale: {
+          A: 'A is incorrect because customer price sensitivity is not the main issue. The company adopted AI because the technology itself became affordable and practical.',
+          B: 'B is incorrect because barriers to entry concern how hard it is for new firms to enter an industry. That is not the main point of this scenario.',
+          C: 'C is correct because falling computing costs make computationally intensive applications practical for smaller firms. That is exactly why the tutoring company can now use AI tools.',
+          D: 'D is incorrect because falling computing costs affect far more than hardware makers. Service businesses also benefit when advanced software becomes affordable.'
+        }
+      },
+      c6q5: {
+        correct: 'B',
+        rationale: {
+          A: 'A is incorrect because the chapter argues that even when devices already feel fast, continued price and performance gains can still create new applications and more demand.',
+          B: 'B is correct because repeated improvements in computing power and price/performance can create entirely new uses, products, and business models. That is one of the central managerial lessons of the chapter.',
+          C: 'C is incorrect because software design matters, but the chapter specifically emphasizes that hardware trends shape what software and services become possible in the first place.',
+          D: 'D is incorrect because ignoring future computing capability is exactly the kind of managerial blind spot the chapter warns against.'
         }
       }
     };
 
-    function buildFullExplanation(qNum) {
+    function buildFullExplanation(qid) {
       const letters = ['A', 'B', 'C', 'D'];
-      const items = letters.map(letter => {
-        return `<li><strong>${letter}.</strong> ${feedbackMap[qNum].rationale[letter]}</li>`;
-      }).join('');
+      const items = letters.map(letter => `<li><strong>${letter}.</strong> ${feedbackMap[qid].rationale[letter]}</li>`).join('');
       return `<div style="margin-top:10px;"><strong>Answer review for all choices:</strong></div><ul style="margin-top:10px; padding-left:20px;">${items}</ul>`;
     }
 
-    document.querySelectorAll('.question').forEach((questionEl, index) => {
-      const qNum = index + 1;
+    document.querySelectorAll('.question').forEach((questionEl) => {
+      const qid = questionEl.dataset.qid;
       const buttons = questionEl.querySelectorAll('.choice-btn');
       const feedback = questionEl.querySelector('.feedback');
       const correct = questionEl.dataset.correct;
@@ -436,30 +759,22 @@
           buttons.forEach(b => {
             b.disabled = true;
             b.classList.remove('correct-choice', 'incorrect-choice');
-            if (b.dataset.choice === correct) {
-              b.classList.add('correct-choice');
-            }
-            if (b.dataset.choice === selected && selected !== correct) {
-              b.classList.add('incorrect-choice');
-            }
+            if (b.dataset.choice === correct) b.classList.add('correct-choice');
+            if (b.dataset.choice === selected && selected !== correct) b.classList.add('incorrect-choice');
           });
 
-          const fullExplanation = buildFullExplanation(qNum);
+          const fullExplanation = buildFullExplanation(qid);
 
           if (selected === correct) {
             feedback.className = 'feedback show correct';
-            feedback.innerHTML = `<strong>Correct.</strong> You chose the right answer. ${feedbackMap[qNum].rationale[correct]}${fullExplanation}`;
+            feedback.innerHTML = `<strong>Correct.</strong> You chose the right answer. ${feedbackMap[qid].rationale[correct]}${fullExplanation}`;
           } else {
             feedback.className = 'feedback show incorrect';
-            feedback.innerHTML = `<strong>Incorrect.</strong> You chose ${selected}, but the correct answer is ${correct}. ${feedbackMap[qNum].rationale[selected]} ${feedbackMap[qNum].rationale[correct]}${fullExplanation}`;
+            feedback.innerHTML = `<strong>Incorrect.</strong> You chose ${selected}, but the correct answer is ${correct}. ${feedbackMap[qid].rationale[selected]} ${feedbackMap[qid].rationale[correct]}${fullExplanation}`;
           }
         });
       });
     });
   </script>
-</body>
-      MIS 301 Extra Credit Study Guide • Chapter 6 Template
-    </footer>
-  </div>
 </body>
 </html>
