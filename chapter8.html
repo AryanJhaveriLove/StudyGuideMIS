@@ -1,1 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 8 Study Guide</title>
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #bf5700;
+      --accent-dark: #8f3f00;
+      --border: #e5e7eb;
+      --success: #166534;
+      --error: #991b1b;
+    }
 
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-weight: 700;
+      color: var(--accent);
+      margin-right: 10px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .nav a:hover {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: var(--accent-dark);
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 40px 32px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 2.4rem;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 8px 0;
+      font-size: 1.05rem;
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .card h2, .section-title {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .term {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .term:first-of-type,
+    .question:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .term h3,
+    .question h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .label {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 10px 0 0;
+    }
+
+    .question {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .choice-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .choice-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      border-color: #d1d5db;
+    }
+
+    .choice-btn.correct-choice {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+
+    .choice-btn.incorrect-choice {
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      display: none;
+    }
+
+    .feedback.show { display: block; }
+
+    .feedback.correct {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: var(--success);
+    }
+
+    .feedback.incorrect {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: var(--error);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 28px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 1.9rem; }
+      .container { padding: 20px 14px 40px; }
+      .hero, .section, .card { padding: 20px; }
+      .nav-inner { padding: 10px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <span class="brand">MIS 301 Study Guides</span>
+      <a href="index.html">Home</a>
+      <a href="chapter1.html">Chapter 1</a>
+      <a href="chapter2.html">Chapter 2</a>
+      <a href="chapter3.html">Chapter 3</a>
+      <a href="chapter4.html">Chapter 4</a>
+      <a href="chapter5.html">Chapter 5</a>
+      <a href="chapter6.html">Chapter 6</a>
+      <a href="chapter7.html">Chapter 7</a>
+      <a href="chapter8.html">Chapter 8</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero">
+      <h1>Chapter 8 Study Guide</h1>
+      <p><strong>Data, Information, and Business Intelligence</strong></p>
+      <p>This chapter explains how firms collect, store, and analyze data to make better decisions, and how raw data becomes useful information and insight.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>What to Know</h2>
+        <p class="muted">This chapter is about how data is stored, processed, and turned into insights that managers can use.</p>
+      </div>
+      <div class="card">
+        <h2>Main Theme</h2>
+        <p class="muted">Raw data has little value on its own. Value comes from turning data into information and insight through analysis.</p>
+      </div>
+      <div class="card">
+        <h2>Manager Takeaway</h2>
+        <p class="muted">Managers should focus on asking the right questions and using data to support decisions, not just collecting more data.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Vocabulary</h2>
+
+      <div class="term">
+        <h3>Data</h3>
+        <p><span class="label">Definition:</span> Data are raw facts or observations that have not yet been processed or interpreted.</p>
+        <p><span class="label">Why it matters:</span> Data alone does not create value until it is organized and analyzed.</p>
+        <p><span class="label">Example:</span> A list of sales transactions is data.</p>
+      </div>
+
+      <div class="term">
+        <h3>Information</h3>
+        <p><span class="label">Definition:</span> Information is processed data that has meaning and context.</p>
+        <p><span class="label">Why it matters:</span> Information helps managers understand what is happening in the business.</p>
+        <p><span class="label">Example:</span> Total weekly sales by region is information.</p>
+      </div>
+
+      <div class="term">
+        <h3>Business Intelligence (BI)</h3>
+        <p><span class="label">Definition:</span> Business intelligence refers to technologies and practices used to analyze data and support decision-making.</p>
+        <p><span class="label">Why it matters:</span> BI tools help managers turn large amounts of data into useful insights.</p>
+        <p><span class="label">Example:</span> Dashboards and reports that show trends and performance metrics.</p>
+      </div>
+
+      <div class="term">
+        <h3>Database</h3>
+        <p><span class="label">Definition:</span> A database is an organized collection of data stored electronically.</p>
+        <p><span class="label">Why it matters:</span> Databases allow firms to efficiently store and retrieve data.</p>
+        <p><span class="label">Example:</span> A customer database storing names, purchases, and contact details.</p>
+      </div>
+
+      <div class="term">
+        <h3>Data Warehouse</h3>
+        <p><span class="label">Definition:</span> A data warehouse is a large centralized repository that stores data from multiple sources for analysis.</p>
+        <p><span class="label">Why it matters:</span> It allows firms to analyze data across different departments and time periods.</p>
+        <p><span class="label">Example:</span> Combining sales, marketing, and finance data into one system.</p>
+      </div>
+
+      <div class="term">
+        <h3>Data Mining</h3>
+        <p><span class="label">Definition:</span> Data mining is the process of analyzing large datasets to find patterns, trends, or relationships.</p>
+        <p><span class="label">Why it matters:</span> It helps firms discover insights that are not obvious.</p>
+        <p><span class="label">Example:</span> Finding that customers who buy one product often buy another.</p>
+      </div>
+
+      <div class="term">
+        <h3>Big Data</h3>
+        <p><span class="label">Definition:</span> Big data refers to extremely large datasets that are difficult to process using traditional tools.</p>
+        <p><span class="label">Why it matters:</span> Big data allows for deeper analysis but requires advanced tools and systems.</p>
+        <p><span class="label">Example:</span> Social media activity, sensor data, and large-scale transaction records.</p>
+      </div>
+
+      <div class="term">
+        <h3>Structured Data</h3>
+        <p><span class="label">Definition:</span> Structured data is organized in a predefined format, such as rows and columns.</p>
+        <p><span class="label">Why it matters:</span> It is easier to store and analyze using traditional databases.</p>
+        <p><span class="label">Example:</span> Data in spreadsheets or relational databases.</p>
+      </div>
+
+      <div class="term">
+        <h3>Unstructured Data</h3>
+        <p><span class="label">Definition:</span> Unstructured data does not have a fixed format and is harder to analyze.</p>
+        <p><span class="label">Why it matters:</span> Much of today’s data is unstructured and requires advanced tools to process.</p>
+        <p><span class="label">Example:</span> Emails, videos, images, and social media posts.</p>
+      </div>
+
+      <div class="term">
+        <h3>Data Visualization</h3>
+        <p><span class="label">Definition:</span> Data visualization is the presentation of data in graphical form.</p>
+        <p><span class="label">Why it matters:</span> Visuals make it easier to understand patterns and trends.</p>
+        <p><span class="label">Example:</span> Charts, graphs, and dashboards.</p>
+      </div>
+
+      <div class="term">
+        <h3>Dashboards</h3>
+        <p><span class="label">Definition:</span> Dashboards are visual displays of key metrics and data.</p>
+        <p><span class="label">Why it matters:</span> They provide quick insights for decision-making.</p>
+        <p><span class="label">Example:</span> A dashboard showing sales, profit, and customer metrics.</p>
+      </div>
+
+      <div class="term">
+        <h3>Predictive Analytics</h3>
+        <p><span class="label">Definition:</span> Predictive analytics uses data and models to forecast future outcomes.</p>
+        <p><span class="label">Why it matters:</span> It helps firms anticipate trends and make proactive decisions.</p>
+        <p><span class="label">Example:</span> Predicting future sales based on past data.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Key Concepts</h2>
+      <ul>
+        <li>Data must be processed into information to be useful.</li>
+        <li>Business intelligence tools help analyze and visualize data.</li>
+        <li>Data warehouses combine data from multiple sources for analysis.</li>
+        <li>Big data creates opportunities but requires advanced tools.</li>
+        <li>Visualization and dashboards make data easier to understand.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Interactive Practice Quiz</h2>
+
+      <div class="question" data-qid="c8q1" data-correct="B">
+        <h3>1. A company collects thousands of daily transactions but has not analyzed them yet.</h3>
+        <p><strong>What does this represent?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Information</button>
+          <button class="choice-btn" data-choice="B">B. Data</button>
+          <button class="choice-btn" data-choice="C">C. Business Intelligence</button>
+          <button class="choice-btn" data-choice="D">D. Dashboard</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c8q2" data-correct="C">
+        <h3>2. A dashboard shows sales trends over time.</h3>
+        <p><strong>What is this an example of?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Raw data</button>
+          <button class="choice-btn" data-choice="B">B. Unstructured data</button>
+          <button class="choice-btn" data-choice="C">C. Data visualization</button>
+          <button class="choice-btn" data-choice="D">D. Database</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="c8q3" data-correct="A">
+        <h3>3. A firm uses past sales data to predict future demand.</h3>
+        <p><strong>What is this called?</strong></p>
+        <div class="choices">
+          <button class="choice-btn" data-choice="A">A. Predictive analytics</button>
+          <button class="choice-btn" data-choice="B">B. Data mining</button>
+          <button class="choice-btn" data-choice="C">C. Data warehouse</button>
+          <button class="choice-btn" data-choice="D">D. Structured data</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+    </section>
+
+    <footer>
+      MIS 301 Study Guide • Chapter 8
+    </footer>
+  </div>
+
+  <script>
+    const feedbackMap = {
+      c8q1: {
+        correct: 'B',
+        rationale: {
+          A: 'Incorrect: Information requires processing and context.',
+          B: 'Correct: Raw transactions are data.',
+          C: 'Incorrect: BI involves analyzing data.',
+          D: 'Incorrect: A dashboard displays information.'
+        }
+      },
+      c8q2: {
+        correct: 'C',
+        rationale: {
+          A: 'Incorrect: This is processed data.',
+          B: 'Incorrect: Dashboards are structured visuals.',
+          C: 'Correct: This is a visual representation of data.',
+          D: 'Incorrect: A database stores data, not visualizes it.'
+        }
+      },
+      c8q3: {
+        correct: 'A',
+        rationale: {
+          A: 'Correct: Predictive analytics forecasts future outcomes.',
+          B: 'Incorrect: Data mining finds patterns, not predictions necessarily.',
+          C: 'Incorrect: A warehouse stores data.',
+          D: 'Incorrect: This refers to format, not usage.'
+        }
+      }
+    };
+
+    document.querySelectorAll('.question').forEach((q) => {
+      const correct = q.dataset.correct;
+      const buttons = q.querySelectorAll('.choice-btn');
+      const feedback = q.querySelector('.feedback');
+
+      buttons.forEach(btn => {
+        btn.onclick = () => {
+          buttons.forEach(b => b.disabled = true);
+          const choice = btn.dataset.choice;
+
+          feedback.classList.add('show');
+          feedback.innerHTML = feedbackMap[q.dataset.qid].rationale[choice];
+
+          if (choice === correct) {
+            btn.classList.add('correct-choice');
+            feedback.classList.add('correct');
+          } else {
+            btn.classList.add('incorrect-choice');
+            feedback.classList.add('incorrect');
+          }
+        };
+      });
+    });
+  </script>
+</body>
+</html>
